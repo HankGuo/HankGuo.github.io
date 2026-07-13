@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>独立淘金地图 · 一个人也能做的赚钱路子</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F0E2; --paper2:#EFE6D0; --card:#FBF7EC;
+  --ink:#241F18; --ink-soft:#5C5142; --ink-faint:#8C8170;
+  --gold:#B5793A; --gold-deep:#8A5A23; --forest:#2F5D50;
+  --terra:#B5543B; --line:rgba(36,31,24,.18);
+  --shadow:4px 4px 0 var(--ink);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  color:var(--ink); background:var(--paper);
+  background-image:radial-gradient(rgba(36,31,24,.07) 1px, transparent 1px);
+  background-size:22px 22px;
+  line-height:1.7; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:"Noto Serif SC","Songti SC",serif; font-weight:900; letter-spacing:.02em; line-height:1.25}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* ---------- TOP BAR ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(246,240,226,.92);
+  backdrop-filter:blur(6px);border-bottom:1.5px solid var(--ink)}
+.topbar .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.brand{font-family:"Noto Serif SC",serif;font-weight:900;font-size:18px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand .mark{width:26px;height:26px;flex:0 0 auto}
+.topnav{margin-left:auto;display:flex;gap:6px;align-items:center}
+.topnav a{font-size:13px;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-radius:8px}
+.topnav a:hover{background:var(--paper2);color:var(--ink)}
+.stat-mini{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;
+  background:var(--ink);color:var(--paper);padding:5px 12px;border-radius:20px;white-space:nowrap}
+.stat-mini .coin{width:14px;height:14px}
+.prog-wrap{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-soft);min-width:140px}
+.prog-bar{flex:1;height:7px;background:var(--paper2);border:1.3px solid var(--ink);border-radius:6px;overflow:hidden}
+.prog-fill{height:100%;width:0;background:var(--gold);transition:width .5s ease}
+@media(max-width:760px){.topnav a{display:none}.prog-wrap{display:none}}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;padding:54px 0 40px;overflow:hidden}
+.hero .compass{position:absolute;right:-60px;top:-30px;width:240px;opacity:.5;pointer-events:none}
+.hero .eyebrow{display:inline-block;font-size:13px;font-weight:700;letter-spacing:.18em;
+  color:var(--gold-deep);border:1.3px solid var(--gold);padding:5px 14px;border-radius:20px;background:var(--card)}
+.hero h1{font-size:clamp(34px,6.5vw,62px);margin:18px 0 14px}
+.hero h1 .hl{color:var(--gold);position:relative}
+.hero p.lead{font-size:clamp(15px,2.4vw,19px);color:var(--ink-soft);max-width:640px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:14px;margin:26px 0 30px}
+.hstat{background:var(--card);border:1.5px solid var(--ink);border-radius:14px;
+  padding:14px 20px;box-shadow:var(--shadow);min-width:120px}
+.hstat b{font-family:"Noto Serif SC",serif;font-size:28px;display:block;color:var(--gold-deep)}
+.hstat span{font-size:12.5px;color:var(--ink-soft)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;
+  padding:13px 22px;border-radius:12px;border:1.5px solid var(--ink);text-decoration:none;
+  cursor:pointer;transition:transform .12s ease, box-shadow .12s ease;background:var(--card);color:var(--ink)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn.gold{background:var(--gold);color:#fff;border-color:var(--gold-deep)}
+.btn.gold:hover{box-shadow:4px 4px 0 var(--gold-deep)}
+
+/* ---------- SECTION ---------- */
+section{padding:46px 0;border-top:1.5px dashed var(--line)}
+.sec-head{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.sec-num{font-family:"Noto Serif SC",serif;font-weight:900;font-size:15px;color:#fff;
+  background:var(--gold);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;border:1.5px solid var(--gold-deep)}
+.sec-head h2{font-size:clamp(24px,4vw,34px)}
+.sec-sub{color:var(--ink-soft);font-size:14.5px;max-width:680px;margin:6px 0 26px}
+
+/* ---------- MAP GRID ---------- */
+.map-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:18px}
+.territory{position:relative;background:var(--card);border:1.5px solid var(--ink);border-radius:16px;
+  padding:18px 18px 16px;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
+.territory:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--ink)}
+.territory .tnum{position:absolute;top:-12px;left:16px;font-family:"Noto Serif SC",serif;font-weight:900;
+  font-size:13px;background:var(--ink);color:var(--paper);padding:2px 10px;border-radius:12px}
+.territory .tg{font-size:30px;margin-bottom:4px}
+.territory h3{font-size:19px;margin-bottom:2px}
+.territory .tag{font-size:13px;color:var(--ink-soft);min-height:38px}
+.terri-meta{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.chip{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:20px;border:1.3px solid var(--ink)}
+.chip.cash{background:var(--paper2)}
+.chip.cnt{background:var(--forest);color:#fff;border-color:var(--forest)}
+.stars{color:var(--gold);font-size:14px;letter-spacing:1px;white-space:nowrap}
+.stars .off{color:var(--line)}
+.lock-badge{margin-left:auto;font-size:11px;font-weight:700;color:var(--ink-faint);border:1.3px dashed var(--line);padding:3px 8px;border-radius:8px}
+.territory.done .lock-badge{color:var(--forest);border-color:var(--forest);border-style:solid}
+
+/* ---------- MODAL ---------- */
+.modal-back{position:fixed;inset:0;background:rgba(36,31,24,.55);backdrop-filter:blur(3px);
+  z-index:100;display:none;align-items:flex-start;justify-content:center;padding:30px 16px;overflow-y:auto}
+.modal-back.open{display:flex}
+.modal{background:var(--paper);border:1.5px solid var(--ink);border-radius:18px;max-width:720px;width:100%;
+  box-shadow:8px 8px 0 var(--ink);animation:pop .18s ease;margin:auto}
+@keyframes pop{from{transform:scale(.96) translateY(8px);opacity:0}to{transform:none;opacity:1}}
+.modal-head{padding:22px 24px 16px;border-bottom:1.5px dashed var(--line);position:relative}
+.modal-head .tg{font-size:34px}
+.modal-head h3{font-size:26px;margin:4px 0 2px}
+.modal-head .tag{color:var(--ink-soft);font-size:14px}
+.modal-close{position:absolute;top:16px;right:18px;width:34px;height:34px;border-radius:50%;
+  border:1.5px solid var(--ink);background:var(--card);font-size:18px;cursor:pointer;line-height:1}
+.modal-close:hover{background:var(--ink);color:var(--paper)}
+.modal-body{padding:20px 24px 26px}
+.block{margin-bottom:20px}
+.block h4{font-size:15px;color:var(--gold-deep);margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.block h4::before{content:"";width:8px;height:8px;background:var(--gold);border-radius:2px;transform:rotate(45deg)}
+.block ul{list-style:none}
+.block li{position:relative;padding-left:20px;margin-bottom:7px;font-size:14.5px;color:var(--ink)}
+.block li::before{content:"›";position:absolute;left:4px;top:-1px;color:var(--terra);font-weight:700;font-size:17px}
+.opp{background:rgba(47,93,80,.08);border-left:3px solid var(--forest);padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:8px;font-size:14px}
+.risk{background:rgba(181,84,59,.08);border-left:3px solid var(--terra);padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:8px;font-size:14px}
+.who-box{background:var(--paper2);border:1.3px solid var(--line);border-radius:10px;padding:12px 14px;font-size:14px}
+.ex-list{display:grid;gap:10px}
+.ex{display:flex;gap:11px;align-items:flex-start;background:var(--card);border:1.3px solid var(--line);
+  border-radius:11px;padding:11px 13px;text-decoration:none;transition:border-color .12s,transform .12s}
+.ex:hover{border-color:var(--ink);transform:translateX(2px)}
+.ex .exicon{font-size:18px;flex:0 0 auto;margin-top:1px}
+.ex .exbody{min-width:0}
+.ex .exname{font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ex .exname .ov{font-size:10px;background:var(--gold);color:#fff;padding:1px 6px;border-radius:8px;font-weight:700}
+.ex .exdesc{font-size:12.5px;color:var(--ink-soft);margin-top:2px;line-height:1.5}
+
+/* ---------- QUIZ ---------- */
+.quiz-card{background:var(--card);border:1.5px solid var(--ink);border-radius:18px;
+  box-shadow:var(--shadow);padding:26px 26px 28px;max-width:640px;margin:0 auto}
+.quiz-step{display:none}
+.quiz-step.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.q-prog{font-size:13px;color:var(--ink-soft);margin-bottom:6px;font-weight:700}
+.q-title{font-family:"Noto Serif SC",serif;font-size:21px;margin-bottom:18px}
+.q-opt{display:block;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--ink);
+  border-radius:12px;padding:14px 16px;margin-bottom:11px;font-size:15px;cursor:pointer;font-family:inherit;
+  transition:transform .1s, background .1s}
+.q-opt:hover{background:var(--paper2);transform:translateX(3px)}
+.q-opt.sel{background:var(--ink);color:var(--paper)}
+.q-nav{display:flex;justify-content:space-between;margin-top:18px;gap:10px}
+.result{display:none;text-align:center;animation:fade .3s}
+.result.active{display:block}
+.result .badge{font-size:40px;margin-bottom:6px}
+.result h3{font-size:24px;color:var(--gold-deep);margin-bottom:8px}
+.result .rdesc{font-size:14.5px;color:var(--ink-soft);margin-bottom:16px}
+.result .rtracks{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+
+/* ---------- CASES ---------- */
+.case-tools{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px;align-items:center}
+.search{flex:1;min-width:180px;display:flex;align-items:center;gap:8px;background:var(--card);
+  border:1.5px solid var(--ink);border-radius:11px;padding:9px 13px}
+.search input{border:none;background:none;outline:none;font-family:inherit;font-size:14px;width:100%;color:var(--ink)}
+.filter-chips{display:flex;flex-wrap:wrap;gap:7px}
+.fchip{font-size:12.5px;font-weight:700;padding:6px 12px;border-radius:20px;border:1.4px solid var(--ink);
+  background:var(--card);cursor:pointer;transition:all .12s}
+.fchip:hover{background:var(--paper2)}
+.fchip.on{background:var(--ink);color:var(--paper)}
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:13px}
+.case{background:var(--card);border:1.3px solid var(--line);border-radius:13px;padding:14px 15px;
+  text-decoration:none;color:inherit;transition:border-color .12s,transform .12s}
+.case:hover{border-color:var(--ink);transform:translateY(-2px)}
+.case .ctop{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.case .cname{font-weight:700;font-size:14.5px}
+.case .ctrack{font-size:10.5px;font-weight:700;color:var(--forest);border:1.2px solid var(--forest);padding:1px 7px;border-radius:8px;white-space:nowrap}
+.case .cdesc{font-size:12.5px;color:var(--ink-soft);line-height:1.55}
+.case .cov{font-size:10px;background:var(--gold);color:#fff;padding:1px 6px;border-radius:7px;font-weight:700}
+.case-count{font-size:13px;color:var(--ink-soft);margin-bottom:12px}
+
+/* ---------- ROADMAP ---------- */
+.steps{display:grid;gap:13px;counter-reset:step}
+.step{display:flex;gap:14px;background:var(--card);border:1.5px solid var(--ink);border-radius:13px;
+  padding:15px 17px;box-shadow:3px 3px 0 var(--ink);cursor:pointer;transition:opacity .2s}
+.step .num{flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;font-family:"Noto Serif SC",serif;font-weight:900;background:var(--paper2)}
+.step.done{opacity:.55}
+.step.done .num{background:var(--forest);color:#fff;border-color:var(--forest)}
+.step.done .stitle{text-decoration:line-through}
+.step .stitle{font-weight:700;font-size:15.5px}
+.step .sdesc{font-size:13px;color:var(--ink-soft);margin-top:2px}
+
+/* ---------- FOOTER ---------- */
+footer{border-top:1.5px solid var(--ink);padding:30px 0 50px;background:var(--paper2)}
+footer .wrap{font-size:13px;color:var(--ink-soft)}
+footer b{color:var(--ink)}
+footer a{color:var(--gold-deep);text-decoration:none}
+.note{background:var(--card);border:1.3px dashed var(--line);border-radius:10px;padding:14px 16px;margin-top:14px;font-size:12.5px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);
+  color:var(--paper);padding:11px 20px;border-radius:24px;font-size:13.5px;font-weight:700;opacity:0;
+  pointer-events:none;transition:all .3s;z-index:200}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#241F18" stroke-width="2"/><path d="M16 4v24M4 16h24" stroke="#241F18" stroke-width="1.4"/><path d="M16 16l7-7-7 3-7-3 7 7z" fill="#B5793A"/></svg>
+      独立淘金地图
+    </div>
+    <div class="prog-wrap"><span id="progTxt">已探索 0/11</span><div class="prog-bar"><div class="prog-fill" id="progFill"></div></div></div>
+    <div class="stat-mini"><svg class="coin" viewBox="0 0 24 24" fill="#B5793A"><circle cx="12" cy="12" r="10" stroke="#8A5A23" stroke-width="1.5"/><text x="12" y="16" font-size="11" font-weight="900" text-anchor="middle" fill="#fff">¥</text></svg><span id="coinTxt">0</span></div>
+    <nav class="topnav">
+      <a href="#map">赛道地图</a>
+      <a href="#quiz">测一测</a>
+      <a href="#cases">真实案例</a>
+      <a href="#roadmap">行动清单</a>
+    </nav>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <svg class="compass" viewBox="0 0 200 200" fill="none">
+    <circle cx="100" cy="100" r="92" stroke="#241F18" stroke-width="2"/>
+    <circle cx="100" cy="100" r="74" stroke="#241F18" stroke-width="1" stroke-dasharray="4 5"/>
+    <path d="M100 14 L112 100 L100 186 L88 100 Z" fill="#241F18"/>
+    <path d="M14 100 L100 88 L186 100 L100 112 Z" fill="#B5793A"/>
+    <text x="100" y="30" text-anchor="middle" font-size="12" fill="#241F18" font-weight="700">N</text>
+  </svg>
+  <div class="wrap">
+    <span class="eyebrow">不是教你写代码 · 是帮你找路子</span>
+    <h1>一个人，一个产品，<br>一门<span class="hl">能赚钱的生意</span></h1>
+    <p class="lead">我们把 <b>1600+ 个中国独立开发者</b> 的真实产品拆开看：他们到底做了什么、靠什么收钱、哪些值得你抄作业。下面是按「赚钱路子」重新画的地图，专为不想写代码、只想落地的人做的。</p>
+    <div class="hero-stats">
+      <div class="hstat"><b>1600+</b><span>真实上线的产品</span></div>
+      <div class="hstat"><b>11</b><span>条可抄的赚钱赛道</span></div>
+      <div class="hstat"><b>48</b><span>个面向海外的项目</span></div>
+      <div class="hstat"><b>0</b><span>需要你先会编程</span></div>
+    </div>
+    <div class="cta-row">
+      <a class="btn primary" href="#map">🗺️ 打开淘金地图</a>
+      <a class="btn gold" href="#quiz">⛏️ 测测我适合哪条路</a>
+    </div>
+  </div>
+</header>
+
+<!-- MAP -->
+<section id="map">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">1</div><h2>赛道地图</h2></div>
+    <p class="sec-sub">每一块「领地」都是一条已经被验证能收钱的路子。点开看：它到底能干啥、怎么收钱、难度多大、有哪些真人真事可以抄。点亮全部 11 块，解锁你的淘金者徽章。</p>
+    <div class="map-grid" id="mapGrid"></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">2</div><h2>测一测：你是哪种淘金者？</h2></div>
+    <p class="sec-sub">3 个问题，帮你从 11 条赛道里挑出最该先看的 1~2 条。没有标准答案，只有更适合你的起点。</p>
+    <div class="quiz-card">
+      <div id="quizBox"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">3</div><h2>真实案例库</h2></div>
+    <p class="sec-sub">上面每条赛道背后，都是活生生的产品。下面是从仓库里挑出来的真实项目，按赛道和关键词随便翻，找跟你情况最像的那个「抄」。</p>
+    <div class="case-tools">
+      <div class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5C5142" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input id="caseSearch" placeholder="搜关键词：视频 / 记账 / 出海 / 小程序…"></div>
+      <div class="filter-chips" id="caseFilters"></div>
+    </div>
+    <div class="case-count" id="caseCount"></div>
+    <div class="case-grid" id="caseGrid"></div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-num">4</div><h2>从 0 到 1 行动清单</h2></div>
+    <p class="sec-sub">选好路子后，按这个顺序走。每完成一步点一下，别想完美，先发再说。点击可勾掉。</p>
+    <div class="steps" id="steps"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>数据来源：<b>github.com/1c7/chinese-independent-developer</b>（中国独立开发者项目列表，主版面）。本页于 2026-07-13 解析其 README，共提取 <b>1653</b> 条已上线产品，按商业视角重新归类成 11 条赛道，并精选其中真实案例展示。</p>
+    <div class="note">⚠️ 说明：赛道归类与「赚钱方式 / 难度 / 适合谁」是我们从非开发者、纯商业落地视角做的解读，不是项目原作者的自述。案例链接均指向原作者产品，收益与风险请自行判断。另约有 580 个偏技术/论坛型项目未单列。本页仅供启发思路，不构成任何投资建议。</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<!-- MODAL -->
+<div class="modal-back" id="modalBack">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+const RAW0 = {"浏览器插件": [{"n": "Extension聚合平台", "u": "https://aiextension.ai", "d": "AI相关的extension聚合平台，免费无限提交", "ov": false}, {"n": "全屏守门员", "u": "https://chromewebstore.google.com/detail/screen-break-keeper/mnmaobcpbjhbheefbgkomgflmgphbfne", "d": "浏览器休息提醒插件，全屏沉浸式宠物互动定时提醒休息可自定义视频图片，免费无广告、无注册、零AI", "ov": false}, {"n": "AutoFit 浏览器插件", "u": "https://chromewebstore.google.com/detail/autofit/ablniobpojpaihhohacpjhgcbnkhmfeo?hl=zh-CN&utm_source=ext_sidebar", "d": "使网页根据浏览器窗口缩放", "ov": false}, {"n": "天命打工人插件", "u": "https://chromewebstore.google.com/detail/%E5%A4%A9%E5%91%BD%E6%89%93%E5%B7%A5%E4%BA%BA/annhlammehogodlbcnncafpgnefbmpah", "d": "倒计时的时间摸鱼浏览器插件", "ov": false}, {"n": "软猫下载", "u": "https://softmall.net/", "d": "无插件软件/APP下载中心", "ov": false}, {"n": "ResellBuddy", "u": "https://resellbuddy.pages.dev", "d": "Poshmark 自动化 Chrome 扩展，一键自动分享/点赞/关注，内置定时任务和分析面板，每月 $9 起", "ov": true}, {"n": "Quest新标签页", "u": "https://support.qq.com/products/308410/blog/744528", "d": "【聚合搜索】新标签页效率插件。", "ov": false}, {"n": "Ranking Tabs", "u": "https://chromewebstore.google.com/detail/ranking-tabs/nfnfblfhnipebcbicjapboccdabdimfa", "d": "浏览网站次数排行榜 Chrome 插件", "ov": false}, {"n": "KissPixel", "u": "https://kisspixel.ai/", "d": "AI 图像生成平台，集成六大核心工具：文本生成图像、图像风格转换、AI 换脸、智能图像替换、图像扩展和图像放大。平台采用积分制运营模式，新用户注册即可获得免费积分。支持多种订阅计划", "ov": false}, {"n": "Toolkit", "u": "http://toolkit.trumandu.top/", "d": "极简、插件化的工具集！utools 对标开源版", "ov": false}, {"n": "百词斩助手", "u": "https://www.bilibili.com/video/BV1zj411Z7LM", "d": "实时与百词斩 APP 协同操作的浏览器翻译插件", "ov": false}, {"n": "PromptHub提示词管理优化使用工具", "u": "https://prompt.hubtoday.app", "d": "AI 提示词管理平台，支持浏览器插件，多平台客户端", "ov": false}], "AI内容生成": [{"n": "CleverGet Free Recorder", "u": "https://www.leawo.org/cleverget-recorder/", "d": "免费录制在线视频并可过滤广告的工具", "ov": false}, {"n": "极简AI生图", "u": "https://image.stockai.trade", "d": "AI 生图网站，完全免费、免登录、无广告、无水印", "ov": false}, {"n": "xldream", "u": "https://www.xldream.com", "d": "免费 AIGC 图片素材网", "ov": false}, {"n": "email signature generator", "u": "https://email-signature-generator.online/", "d": "免费的专业邮件签名在线生成器", "ov": false}, {"n": "AI Anime Generator", "u": "https://aianimegen.org", "d": "免费的 AI 动漫图片生成器", "ov": false}, {"n": "壁纸千寻", "u": "https://apps.apple.com/app/id6504430291", "d": "免费下载手机壁纸，每日自动更新", "ov": false}, {"n": "UnblurImage AI", "u": "https://unblurimage.ai/zh", "d": "图片无损放大变清晰网站（免费无广）", "ov": false}, {"n": "SimpleThumbnail", "u": "https://simplethumbnail.com", "d": "YouTube 视频缩略图下载工具（免费)，支持多分辨率提取，界面简洁无广告", "ov": false}, {"n": "Pokecut", "u": "https://www.pokecut.com/", "d": "在线免费使用的 AI 图像编辑/生成器", "ov": false}, {"n": "AI Lyrics Generator", "u": "https://www.lyricsgenerator.io", "d": "免费人工智能歌词生成器和人工智能歌曲作家", "ov": false}, {"n": "TRELLIS 3D AI", "u": "https://trellis3d.co/", "d": "将图片转换为 3D 资产的免费 AI 工具", "ov": false}, {"n": "codebox-有趣的二维码平台", "u": "https://www.codebox.club", "d": "超萌的免费二维码生成器，每一个二维码都有故事", "ov": false}], "AI效率工具": [{"n": "猫步简历", "u": "https://maobucv.com/", "d": "简历制作神器（开源免费）", "ov": false}, {"n": "RIZZ AI", "u": "https://rizzai.ai/", "d": "AI 约会助手", "ov": false}, {"n": "GIF 助手", "u": "https://gif.uyidev.com", "d": "GIF 合并与分解", "ov": false}, {"n": "AI快讯助手", "u": "https://nav.chatgpt-plus.top/", "d": "每日 AI 资讯，实时更新", "ov": false}, {"n": "Emoji Spark", "u": "https://emojispark.com", "d": "AI Emoji 搜索工具", "ov": false}, {"n": "微芒计划", "u": "https://kestrel-task.cn", "d": "简洁方便的效率待办管理工具", "ov": false}, {"n": "简链", "u": "https://www.cvlinkhub.online/", "d": "打造个性化简历，赢得理想工作", "ov": false}, {"n": "LLMOCR", "u": "https://llmocr.com", "d": "基于 AI 的 OCR 服务", "ov": false}, {"n": "STranslate", "u": "https://stranslate.zggsong.com", "d": "即开即用、即用即走的翻译(OCR)工具", "ov": false}, {"n": "ExtractKeywords", "u": "https://extractkeywords.com", "d": "AI 驱动的关键词提取工具，支持中英文，免费使用，无需注册，纯前端实现，隐私安全", "ov": false}, {"n": "AI工具大全", "u": "https://ai.fly63.com", "d": "AI 工具导航站，收集和整理常用 AI 工具", "ov": false}, {"n": "所思笔记", "u": "https://apps.apple.com/cn/app/id1668533045", "d": "日有所思夜有所梦，记录白天的所思和晚上的梦。", "ov": false}], "内容社区": [{"n": "toolrain.com", "u": "https://toolrain.com/", "d": "AI导航站，可免费提交，收录处理快", "ov": false}, {"n": "Mydirs", "u": "https://mydirs.com", "d": "导航站收录产品和工具，吸引流量并建立高质量外部链接", "ov": false}, {"n": "Aigotools", "u": "https://github.com/someu/aigotools/blob/main/README.zh-CN.md", "d": "开源导航站", "ov": false}, {"n": "工具导航站", "u": "https://tooldisk.com/", "d": "展示各种各样的工具", "ov": false}, {"n": "AI Agents Directory", "u": "https://ai-agents-directory.com", "d": "AI 智能体导航站", "ov": false}, {"n": "反斗限免", "u": "https://free.apprcn.com", "d": "软件、游戏限免资讯网站", "ov": false}, {"n": "Curate Click", "u": "https://curateclick.com/", "d": "导航站，收录产品和工具。", "ov": false}, {"n": "AI工具箱", "u": "https://www.ailookme.com", "d": "人工智能领域工具导航网站", "ov": false}, {"n": "aiagents42.com", "u": "https://aiagents42.com/", "d": "AI Agents 导航站", "ov": false}, {"n": "FilingInsight", "u": "https://filing-insight.com/", "d": "快速解读美股财报的 AI 工具，1 万多份财报解读，多语言支持，免费阅读", "ov": true}, {"n": "什么值得看", "u": "https://smzdk.top", "d": "简洁干净的高质量全球热点资讯网站", "ov": true}, {"n": "Tooluck.org", "u": "https://www.tooluck.org", "d": "AI 工具导航站，AI自动填写功能，免费收录，帮助新AI网站提升SEO权重", "ov": false}], "SaaS生产力": [{"n": "Kmail临时邮箱", "u": "https://kmail.pw/", "d": "免费安全的临时邮箱，保护您的个人隐私，告别广告垃圾邮件的骚扰", "ov": false}, {"n": "TmpMail", "u": "https://www.tmpmail.online", "d": "免费临时邮箱TmpMail", "ov": false}, {"n": "SaaSHunt", "u": "https://saashunt.net/", "d": "精选 SaaS 工具导航网站，发现和探索各类优质的免费与付费 SaaS 产品", "ov": false}, {"n": "找到每个任务的最佳 AI 工具", "u": "https://toollist.ai", "d": "找到最好的 AI 工具", "ov": false}, {"n": "ChatTempMail", "u": "https://chat-tempmail.com", "d": "AI 驱动的临时邮箱服务", "ov": false}, {"n": "snapmail - 临时邮箱", "u": "https://snapmail100.com", "d": "临时无限邮箱保护你的隐私安全", "ov": false}, {"n": "IndieAI Directory", "u": "https://indieai.directory/", "d": "收录独立开发者的AI Saas", "ov": false}, {"n": "2AI Tools", "u": "https://2ai.tools/", "d": "AI 工具导航与发现平台，按需求搜索和对比 AI 工具，支持按免费/免费增值/付费/开源筛选，提供工作流推荐和每日 AI 资讯，可社区提交新工具", "ov": false}, {"n": "TempMail.Love", "u": "https://tempmail.love/", "d": "即用即走的临时邮箱，保护你的个人隐私安全", "ov": false}, {"n": "Temp Mail", "u": "https://tempmail.la/", "d": "临时邮箱(免费)，保护隐私安全，避免垃圾邮件骚扰，打开就可以使用，无需登录或注册。", "ov": false}, {"n": "Octopus", "u": "https://github.com/Rvelamen/Octopus", "d": "AI Agent 桌面框架 · 多触手高效协作", "ov": false}, {"n": "Mobyform", "u": "https://mobyform.com", "d": "在线表单构建工具，支持问卷调查、工作流和回复收集", "ov": false}], "开发者服务": [{"n": "DNS.fish", "u": "https://dns.fish", "d": "域名 DNS 记录查询", "ov": false}, {"n": "TAO tracker", "u": "https://taotracker.org", "d": "TAO 子网交易监控与快捷导航工具", "ov": false}, {"n": "FtpServer", "u": "https://github.com/jark006/FtpServer", "d": "Windows 平台 FTP 服务器", "ov": false}, {"n": "SSH Monitor: SSH终端与服务器监控", "u": "https://apps.apple.com/cn/app/id6479361680", "d": "SSH 远程云服务器/容器监控管理终端", "ov": false}, {"n": "Query.Domains", "u": "https://query.domains", "d": "极速域名注册状态及 whois 批量查询", "ov": false}, {"n": "免费API共享平台", "u": "https://www.liangmlk.cn", "d": "给广大开发者提供免费 API 共享平台,目前共计 400+ 个API接口，欢迎大家使用", "ov": false}, {"n": "Days Launch", "u": "https://dayslaunch.com/", "d": "每天构建，每天发布。做一个发布站+目录站，让开发者都可以免费的发布自己的作品，进行获客和宣传", "ov": false}, {"n": "Free Way", "u": "https://github.com/GoDiao/Free-Way", "d": "收纳全球 API Provider 免费额度，支持 Anthropic/OpenAI API格式的通用网关", "ov": true}, {"n": "Random Letter Generator", "u": "https://randomlettergenerator.app/", "d": "随机生成指定数量的序列,适用密码生成、游戏开发中的随机元素序列等等", "ov": false}, {"n": "BlueSky SDK", "u": "https://bskyinfo.com/sdks/", "d": "Bluesky & AT Protocol SDKs Directory", "ov": false}, {"n": "Developer Tools Hub", "u": "https://devtools-site-cos.pages.dev", "d": "35+ 免费在线开发者工具合集，包含 JSON→TypeScript 转换、CSS 渐变生成、正则测试、Diff 对比等，无需注册，浏览器即开即用", "ov": false}, {"n": "Proxied Web from URL", "u": "https://web.818233.xyz", "d": "代理服务器，完全免费，把任何网址放在 https://web.818233.xyz/ 后面，这个新的网址就可以作为代理服务器获取原网站的内容，目前只支持内容获取，不支持网站交互操作", "ov": false}], "App应用": [{"n": "美丽记账", "u": "https://www.mingcui.cn/meili/", "d": "记账 App（简单好用免费）", "ov": false}, {"n": "钢琴小组件 (iOS)", "u": "https://6x.studio/piano-widget/", "d": "无需启动，随时弹奏", "ov": false}, {"n": "小天气", "u": "https://github.com/jark006/weather_widget", "d": "安卓平台桌面天气小部件", "ov": false}, {"n": "自开票app", "u": "https://www.zikaipiao.com", "d": "开票一整年，只扫一次脸", "ov": false}, {"n": "RegEx+", "u": "https://apps.apple.com/app/regex/id1511763524", "d": "调试正则表达试的 app。", "ov": false}, {"n": "SigniFi", "u": "https://www.signifi.life/", "d": "AI 塔罗牌占卜，DApp", "ov": false}, {"n": "iOS App：可沐心语 - 通过 Emoji 随时记录心情，阅读精美治愈与激励好句子", "u": "https://apps.apple.com/cn/app/%E5%8F%AF%E6%B2%90%E5%BF%83%E6%83%85%E8%AF%AD%E5%BD%95/id6444787701", "d": "每日语录与心情记录小工具。", "ov": false}, {"n": "鸭梨海拔 (iOS)", "u": "https://apps.apple.com/cn/app/id6738301793", "d": "精美海拔计，旅行海拔打卡必备", "ov": false}, {"n": "记一杯", "u": "https://apps.apple.com/cn/app/%E8%AE%B0%E4%B8%80%E6%9D%AF/id6478443878", "d": "奶茶、咖啡、饮品全记录 App", "ov": false}, {"n": "念念不忘 (iOS)", "u": "https://buwang.app/", "d": "简单粗暴的 iOS 提醒小组件", "ov": false}, {"n": "侠客日记", "u": "https://github.com/Yu-Core/SwashbucklerDiary", "d": "本地日记 App（开源、跨平台）", "ov": false}, {"n": "简约木鱼 (iOS)", "u": "https://apps.apple.com/cn/app/id6445845846", "d": "最简单好用不卡顿的敲木鱼 App", "ov": false}], "设计素材": [{"n": "atemplate", "u": "https://atemplate.com", "d": "只收集完全免费的网页模板的导航站", "ov": false}, {"n": "TrySchedule", "u": "https://tryschedule.com", "d": "免费在线日程规划，拖拽式时间管理，支持多种模板，无需注册", "ov": false}, {"n": "Square Face Icon Generator", "u": "https://www.squarefaceicongenerator.co/", "d": "生成方形脸图标工具", "ov": false}, {"n": "bratgenerator", "u": "https://bratgenerator.dev/", "d": "可以设置字体，背景颜色等", "ov": false}, {"n": "BookletAI", "u": "https://bookletai.org/", "d": "AI 生成小册子（免费）可自动研究网络、配图并生成任何主题的综合在线书籍", "ov": false}, {"n": "logo87.com", "u": "https://logo87.com", "d": "几秒钟创建专业的 favicon", "ov": false}, {"n": "Minitrade", "u": "https://dodid.github.io/minitrade/", "d": "为个人投资者设计的量化回测交易系统", "ov": false}, {"n": "Logo.surf", "u": "https://www.logo.surf", "d": "文字生成 Logo & Favicon", "ov": false}, {"n": "Podwise", "u": "https://podwise.xyz/", "d": "专为播客听友设计的 AI 知识管理应用", "ov": false}, {"n": "Twitter Classic Logo", "u": "https://chrome.google.com/webstore/detail/twitter-classic-logo/ldimicjoagopeeflheigbfaoopenobbn", "d": "恢复 Twitter 原来蓝鸟 Logo", "ov": false}, {"n": "Cowork Skills", "u": "https://www.cowork-skills.com/", "d": "收集 Claude Cowork Prompt 模板", "ov": false}, {"n": "PNG贴纸切割器", "u": "https://tools.xiaotie.top/sticker-crop.html", "d": "贴纸素材不规整，它来帮你自动切割成单个的，省时又省力！", "ov": false}], "微信小程序": [{"n": "文件收集小程序", "u": "https://nicen.cn/wp-content/uploads/2022/07/gh_3a8e81971071_430.jpg", "d": "在线收集文件的微信小程序", "ov": false}, {"n": "不懂药问", "u": "https://www.v2ex.com/t/962506", "d": "查询医保用药的微信小程序", "ov": false}, {"n": "DE好图壁纸", "u": "https://raw.githubusercontent.com/ddd702/learnfe/main/bovi8x8htx.png", "d": "分享一些图片，壁纸的小程序", "ov": false}, {"n": "早晚猜", "u": "https://github.com/mark420524/guess", "d": "猜成语微信小程序，看图猜成语", "ov": false}, {"n": "WordleX (微信小程序)", "u": "https://hzlzh.app/i/qr/wordlex.jpg", "d": "Wordle 游戏的练习工具", "ov": false}, {"n": "AI语音记账", "u": "https://github.com/AtlanticF/chinese-independent-developer/assets/14820026/83165766-9dca-47fb-a475-49892f1f719c", "d": "(微信小程序) AI语音识别记账", "ov": false}, {"n": "表情小程序-前后台源码", "u": "https://ext.dcloud.net.cn/plugin?id=14972", "d": "斗图表情小程序前后台都有 (开源免费) 后台管理系统可批量管理前端小程序形成矩阵", "ov": false}, {"n": "便签喵", "u": "https://www.zhimiaox.cn/images/bqm.jpg", "d": "联动桌面设备的便签待办小工具(微信小程序)", "ov": false}, {"n": "BindBook", "u": "https://s21.ax1x.com/2024/03/31/pF7mmKx.png", "d": "社交关系记录小程序，同时提供微信提醒倒数日等功能。", "ov": false}, {"n": "微信小程序-途搭", "u": "https://github.com/user-attachments/assets/2437a6c4-b21b-4f00-a7a3-cc8b245106ae", "d": "徒步者的装备搭配系统，可以查看想去路线他人的搭配和热门装备", "ov": false}, {"n": "今天记了么", "u": "https://flingyp.online/posts/%E4%BB%8A%E5%A4%A9%E8%AE%B0%E4%BA%86%E4%B9%88.html", "d": "日常记录打卡目标的微信小程序。用科学打卡，让自律变成简单的日常", "ov": false}, {"n": "AI食谱", "u": "https://user-images.githubusercontent.com/17782609/282380944-121b80d7-c981-4502-b91f-aa4de163fa13.jpg", "d": "(微信小程序) 根据体重与万能减脂/增肌公式自动生成食谱，达到效果", "ov": false}], "硬件IoT": [{"n": "相机印", "u": "https://apps.apple.com/app/id6447237830", "d": "为照片添加参数水印边框。", "ov": false}, {"n": "动猫相机", "u": "https://apps.apple.com/cn/app/%E5%8A%A8%E7%8C%AB%E7%9B%B8%E6%9C%BA/id6449184105", "d": "一键拍猫表情包的相机 APP", "ov": false}, {"n": "水印相机", "u": "https://camera.hnher.com/", "d": "可以拍带水印照片并分享给微信好友。", "ov": false}, {"n": "Telegram AI助手", "u": "https://t.me/iMessageAI_bot", "d": "Telegram ChatGPT 机器人(完全免费、没有广告)，GPT-4o-mini 模型，支持图片识别，在 Telegram 中给 @iMessageAI_bot 发消息即可使", "ov": false}, {"n": "egos", "u": "https://egosapp.com", "d": "零配置 mini-NAS，个人设备文件传输和分享", "ov": false}, {"n": "好色相机", "u": "https://apps.apple.com/cn/app/id1151401197", "d": "从照片中提取关键色彩值，为你的设计提供色彩灵感。", "ov": false}, {"n": "Sharptooth", "u": "https://apps.apple.com/app/sharptooth-bluetooth-hotkeys/id6748440814", "d": "快捷键开关 Mac 蓝牙设备，脚本触发，低电量提醒。", "ov": false}, {"n": "Nigate", "u": "https://github.com/hoochanlon/Free-NTFS-For-Mac", "d": "支持苹果芯片的 Free NTFS for Mac 小工具软件", "ov": false}, {"n": "Kake日记", "u": "https://apps.apple.com/us/app/kake-journal-password-diary/id1515415906", "d": "极简风格的日记 App, 多设备适配, 曾上 Apple 推荐。", "ov": false}, {"n": "Labubu Wallpaper", "u": "https://labubuwallpaper.com/", "d": "下载 4K Labubu 壁纸，针对 iPhone, 笔记本和移动设备优化", "ov": false}, {"n": "慢图浏览", "u": "https://relaxpic.com/", "d": "安卓相册（快速、简洁），内置相机、隐私空间、文件传输助手等功能，保护用户隐私", "ov": false}, {"n": "小红书去水印视频 下载器", "u": "https://www.xhs-download.org/zh", "d": "小红书去水印视频下载器，可保存小红书视频，高质量无水印，无需注册，适用于所有设备", "ov": false}], "电商出海": [{"n": "ShopAI", "u": "https://vipvan.cc/shop-ai", "d": "生成电商详情图，简化商家操作复杂度", "ov": false}, {"n": "CelebShout", "u": "https://www.celebshout.online/zh", "d": "AI 生成明星语音为你街头吆喝带货", "ov": false}, {"n": "Listing诊断器", "u": "https://yifanyifan897645.github.io/listing-analyzer/", "d": "免费在线跨境电商 Listing 质量分析工具，支持亚马逊/速卖通/Shopify，检测标题长度、关键词密度、卖点结构，给出优化建议。纯浏览器端处理，无需注册，数据不上传。", "ov": true}, {"n": "US Address Generator", "u": "https://usaddressgenerator.net", "d": "美国随机地址生成工具，支持一键生成包含街道、城市、州和邮编的真实格式地址，适合开发者进行系统测试或跨境业务模拟注册。", "ov": true}]};
+const KEYMAP={'ai_content':'AI内容生成','ai_eff':'AI效率工具','app':'App应用','ext':'浏览器插件','content':'内容社区','saas':'SaaS生产力','dev':'开发者服务','design':'设计素材','wechat':'微信小程序','hardware':'硬件IoT','crossborder':'电商出海'};
+const RAW={};
+for(const k in RAW0){const id=Object.keys(KEYMAP).find(x=>KEYMAP[x]===k);if(id)RAW[id]=RAW0[k];}
+const TOTAL = 1653;
+
+const TRACKS = [
+ {id:'ai_content',name:'AI内容生成',icon:'🎬',tag:'一句话变成视频、图片、音乐、文案',cnt:RAW.ai_content.length,diff:2,cash:'订阅 / 按量 / 接单',
+  blurb:'你不用会拍、会画、会写。把想法丢给 AI，它帮你产出能卖的内容——短视频、商品图、背景音乐、头像、文案。',
+  money:['订阅制：用户按月付费，最稳的现金流','按量收费：生成一次收一次，门槛低','代运营/接单：帮商家做内容赚差价','卖成品素材/模板：一次制作多次卖'],
+  opp:['短视频 + 电商 + 自媒体对内容的需求是爆炸式增长','绑定一个具体行业（如电商图、婚庆视频）比做大而全更稳'],
+  risk:['同质化严重，套壳产品容易被大厂免费版冲垮','人脸/明星/版权素材有法律风险，别碰红线'],
+  who:'想做内容但自己不会做的人；手上有商家/自媒体客户资源的人'},
+ {id:'ai_eff',name:'AI效率工具',icon:'⚡',tag:'把费时的动作变成一键完成',cnt:RAW.ai_eff.length,diff:3,cash:'会员 / API按量',
+  blurb:'转录、总结、翻译、解析文件、自动填表……选一个大家天天做、做了烦的具体动作，用 AI 把它变成一键。',
+  money:['免费引流，高级功能收会员','按调用量收费（API 模式）','企业定制/私有化部署'],
+  opp:['越具体的垂直痛点越值钱（如跨境 Listing 诊断）','先验证「有人愿意付费解决这个麻烦」再动手'],
+  risk:['通用型工具最容易被大厂免费吞掉','要持续烧 API 成本，定价要算清毛利'],
+  who:'对某个行业流程熟悉、能发现「这个动作真烦」的人'},
+ {id:'app',name:'App应用',icon:'📱',tag:'上架商店，用户掏钱下载',cnt:RAW.app.length,diff:4,cash:'买断 / 订阅 / 内购',
+  blurb:'做一个手机或电脑 App，用户一次付费下载，或包月订阅。苹果/安卓替你收款、管分发。',
+  money:['买断制：一次付费，App Store 结算','订阅制：持续月费','内购：功能/道具付费'],
+  opp:['小众刚需（记账、习惯、垂直工具）比大而全更容易活','先做「一个功能做到极致」的微型 App'],
+  risk:['上架审核严、设计/维护是长期活','苹果抽成 30%，定价要覆盖成本'],
+  who:'想做长期资产、能接受持续打磨的人'},
+ {id:'ext',name:'浏览器插件',icon:'🧩',tag:'浏览器上加个按钮就收钱',cnt:RAW.ext.length,diff:2,cash:'买断 / 订阅 / 广告',
+  blurb:'在 Chrome/Edge 里加一个小功能解决具体痛点：去广告、翻译、下载、自动填表、摸鱼提醒。',
+  money:['一次性买断或订阅','流量主广告','联盟/带货分成'],
+  opp:['用户获取便宜（商店搜索即来）','做「细分场景 + 品牌化」，别做通用大路货'],
+  risk:['Chrome 政策收紧，违规会被下架','功能简单，极易被复制'],
+  who:'想低门槛快速验证、1~2 周出活的人'},
+ {id:'content',name:'内容社区',icon:'📣',tag:'做号、做社群、卖信任',cnt:RAW.content.length,diff:2,cash:'广告 / 带货 / 会员 / 咨询',
+  blurb:'用资讯站、公众号、社群、课程聚集一群人。人聚起来了，广告、带货、卖课、咨询都能变现。',
+  money:['广告 / 流量主','带货 / 联盟佣金','付费社群 / 会员','卖课 / 咨询'],
+  opp:['AI 解读、工具导航站是当下流量红利','选一个垂直领域持续产出，做「人」的信任'],
+  risk:['慢热，前期没收入，靠复利','同质化导航站已很多，要做出差异'],
+  who:'爱写爱聊、有表达欲或行业积累的人'},
+ {id:'saas',name:'SaaS生产力',icon:'🔁',tag:'网站按月收租',cnt:RAW.saas.length,diff:4,cash:'月订阅（最稳）',
+  blurb:'一个在线工具/平台，用户每月付费使用——协作、表格、建站、CRM、表单、监控等。',
+  money:['月订阅：收入可预测，最稳的现金流','年付折扣 / 团队版提价','增值服务'],
+  opp:['收入可预测、估值高，适合长期主义','先有 10 个愿意付费的人，再谈规模'],
+  risk:['获客贵、要留存，前期可能一直亏','要持续投入研发和服务器'],
+  who:'想做长期生意、能扛过冷启动期的人'},
+ {id:'dev',name:'开发者服务',icon:'🛠️',tag:'赚开发者的钱',cnt:RAW.dev.length,diff:5,cash:'按量 / 订阅',
+  blurb:'API 中转、云部署、监控、域名、建站工具……卖给其他开发者或创业者。客单价高、复购强。',
+  money:['按量计费 / 订阅','企业版 / 私有化','技术支持服务'],
+  opp:['客户付费能力强、复购稳','非技术者可「出需求 + 找人合作」切入'],
+  risk:['圈子小，需要技术信任背书','对非技术背景门槛最高'],
+  who:'有技术背景，或能拉到技术合伙的人'},
+ {id:'design',name:'设计素材',icon:'🎨',tag:'卖模板和素材',cnt:RAW.design.length,diff:2,cash:'会员 / 单买 / 授权',
+  blurb:'做 PPT 模板、海报、图标、配图、Logo、字体，卖给运营和设计师。AI 让生产飞快。',
+  money:['会员订阅随便下','单品购买','商用授权（品牌溢价）'],
+  opp:['每个商家都要图，需求永远在','走「商用授权 + 行业模板」，别只卖单图'],
+  risk:['AI 让门槛变低，竞争白热化','免费素材一大把，要做出品牌'],
+  who:'有点审美、能做图或管设计师的人'},
+ {id:'wechat',name:'微信小程序',icon:'💬',tag:'微信里的生意',cnt:RAW.wechat.length,diff:3,cash:'广告 / 付费 / 导流',
+  blurb:'在微信里做一个小工具或小游戏，靠微信的流量和社交裂变变现。',
+  money:['流量主广告（曝光变现）','付费功能 / 虚拟商品','给电商 / 服务导流'],
+  opp:['微信天然流量，分享即传播','轻量工具 / 小游戏最适合个人'],
+  risk:['审核严、规则多变、依赖平台','封禁风险，别碰灰色地带'],
+  who:'想借微信流量、做轻量产品的人'},
+ {id:'hardware',name:'硬件IoT',icon:'🔧',tag:'卖实物小设备',cnt:RAW.hardware.length,diff:5,cash:'一次性售卖 / 众筹',
+  blurb:'做个小硬件——mini NAS、相机配件、蓝牙键、机器人套件，一次性卖给爱好者。',
+  money:['一次性售卖','众筹预热','配件 / 耗材复购'],
+  opp:['利润高、竞争相对少','从极客小众切入，先众筹验证再量产'],
+  risk:['供应链、库存、资金压力大','售后和品控是重活'],
+  who:'有供应链或极客资源、能扛重资产的人'},
+ {id:'crossborder',name:'电商出海',icon:'🌍',tag:'赚美元的小买卖',cnt:(RAW.crossborder.length)+'+ 个出海项目',diff:3,cash:'美元订阅 / 联盟佣金',
+  blurb:'面向海外用户卖工具、服务或选品分析，收美元。汇率差就是利润差。',
+  money:['美元订阅（客单价高）','联盟 / 带货佣金','独立站售卖'],
+  opp:['同样的产品，海外能卖更高价','选一个你懂的海外细分人群'],
+  risk:['语言、支付、文化差异是门槛','推广渠道（SEO/社媒）要重新学'],
+  who:'英语还行、想赚美元汇率差的人'}
+];
+
+/* ---------- STATE ---------- */
+const LS='goldmap_v1';
+let state={unlocked:JSON.parse(localStorage.getItem(LS)||'[]'),steps:JSON.parse(localStorage.getItem(LS+'_s')||'[]'),coins:Number(localStorage.getItem(LS+'_c')||0)};
+function save(){localStorage.setItem(LS,JSON.stringify(state.unlocked));localStorage.setItem(LS+'_s',JSON.stringify(state.steps));localStorage.setItem(LS+'_c',state.coins);}
+const $=(s,r=document)=>r.querySelector(s);
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1800);}
+
+/* ---------- MAP ---------- */
+function star(n){let s='';for(let i=1;i<=5;i++)s+= i<=n?'★':'<span class="off">★</span>';return s;}
+function renderMap(){
+  const g=$('#mapGrid');g.innerHTML='';
+  TRACKS.forEach((t,i)=>{
+    const done=state.unlocked.includes(t.id);
+    const el=document.createElement('div');el.className='territory'+(done?' done':'');
+    el.innerHTML=`<div class="tnum">${String(i+1).padStart(2,'0')}</div>
+      <div class="tg">${t.icon}</div><h3>${t.name}</h3>
+      <div class="tag">${t.tag}</div>
+      <div class="terri-meta">
+        <span class="chip cnt">${t.cnt} 个</span>
+        <span class="stars" title="启动难度">${star(t.diff)}</span>
+        <span class="lock-badge">${done?'✓ 已解锁':'待解锁'}</span>
+      </div>`;
+    el.onclick=()=>openTrack(t.id);
+    g.appendChild(el);
+  });
+  updateProg();
+}
+function updateProg(){
+  const n=state.unlocked.length;
+  $('#progTxt').textContent=`已探索 ${n}/${TRACKS.length}`;
+  $('#progFill').style.width=(n/TRACKS.length*100)+'%';
+  $('#coinTxt').textContent=state.coins;
+  if(n===TRACKS.length && !state._badge){state._badge=true;toast('🏆 全部解锁！你已是合格淘金者');}
+}
+
+/* ---------- MODAL ---------- */
+function openTrack(id){
+  const t=TRACKS.find(x=>x.id===id);
+  const ex=(RAW[id]||[]).map(e=>`<a class="ex" href="${e.u}" target="_blank" rel="noopener">
+      <div class="exicon">${t.icon}</div>
+      <div class="exbody"><div class="exname">${e.n}${e.ov?'<span class="ov">出海</span>':''}</div>
+      <div class="exdesc">${e.d}</div></div></a>`).join('');
+  $('#modal').innerHTML=`<div class="modal-head">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div class="tg">${t.icon}</div><h3>${t.name}</h3>
+      <div class="tag">${t.tag}</div></div>
+    <div class="modal-body">
+      <div class="block"><h4>这东西到底能干啥</h4><p style="font-size:14.5px;color:var(--ink)">${t.blurb}</p></div>
+      <div class="block"><h4>怎么把钱收回来</h4><ul>${t.money.map(m=>`<li>${m}</li>`).join('')}</ul></div>
+      <div class="block"><h4>值得关注</h4>
+        <div style="font-size:13px;font-weight:700;color:var(--forest);margin-bottom:6px">机会</div>
+        ${t.opp.map(o=>`<div class="opp">${o}</div>`).join('')}
+        <div style="font-size:13px;font-weight:700;color:var(--terra);margin:10px 0 6px">坑</div>
+        ${t.risk.map(r=>`<div class="risk">${r}</div>`).join('')}
+      </div>
+      <div class="block"><h4>适合谁</h4><div class="who-box">${t.who}</div></div>
+      <div class="block"><h4>真人真事（点开看产品）</h4><div class="ex-list">${ex}</div></div>
+    </div>`;
+  $('#modalBack').classList.add('open');
+  document.body.style.overflow='hidden';
+  if(!state.unlocked.includes(id)){
+    state.unlocked.push(id);state.coins+=10;save();renderMap();
+    toast('+10 ¥ 解锁「'+t.name+'」');
+  }
+}
+function closeModal(){$('#modalBack').classList.remove('open');document.body.style.overflow='';}
+$('#modalBack').addEventListener('click',e=>{if(e.target.id==='modalBack')closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+/* ---------- QUIZ ---------- */
+const QUIZ=[
+ {q:'你最想靠什么方式赚钱？',opts:[
+   {t:'月月收租（订阅制）',w:['saas','content','ai_eff']},
+   {t:'一次卖断（买断/实物）',w:['app','hardware','design']},
+   {t:'内容流量变现',w:['content','ai_content','crossborder']},
+   {t:'帮人代做赚差价',w:['ai_content','design','ext']}]},
+ {q:'你能投入多久把产品做出来？',opts:[
+   {t:'1~2 周就要见钱',w:['ext','ai_content','design']},
+   {t:'1~3 个月慢慢打磨',w:['app','wechat','ai_eff']},
+   {t:'半年以上做长期生意',w:['saas','hardware','dev']}]},
+ {q:'你手上有什么牌？',opts:[
+   {t:'行业经验 / 客户资源',w:['ai_content','crossborder','content']},
+   {t:'会点设计 / 文案',w:['design','ai_content','content']},
+   {t:'完全小白但有热情',w:['ext','ai_eff','wechat']},
+   {t:'技术背景或能找技术',w:['dev','saas','app']}]}
+];
+let qa=[];
+function renderQuiz(){
+  const box=$('#quizBox');
+  box.innerHTML='';
+  QUIZ.forEach((step,i)=>{
+    const div=document.createElement('div');div.className='quiz-step'+(i===0?' active':'');
+    div.innerHTML=`<div class="q-prog">第 ${i+1} / ${QUIZ.length} 题</div>
+      <div class="q-title">${step.q}</div>`+
+      step.opts.map((o,j)=>`<button class="q-opt" data-q="${i}" data-j="${j}">${o.t}</button>`).join('')+
+      (i>0?`<div class="q-nav"><button class="btn" onclick="goQ(${i-1})">← 上一题</button></div>`:`<div class="q-nav"><span></span></div>`);
+    box.appendChild(div);
+  });
+  const res=document.createElement('div');res.className='result';res.id='quizResult';box.appendChild(res);
+  box.querySelectorAll('.q-opt').forEach(b=>b.onclick=()=>{
+    const qi=+b.dataset.q;qa[qi]=QUIZ[qi].opts[+b.dataset.j].w;
+    b.parentElement.querySelectorAll('.q-opt').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    if(qi<QUIZ.length-1){goQ(qi+1);}else{showResult();}
+  });
+}
+function goQ(i){document.querySelectorAll('.quiz-step').forEach((s,k)=>s.classList.toggle('active',k===i));}
+function showResult(){
+  const score={};qa.flat().forEach(id=>score[id]=(score[id]||0)+1);
+  const top=Object.entries(score).sort((a,b)=>b[1]-a[1]).slice(0,2).map(e=>e[0]);
+  const res=$('#quizResult');
+  const cards=top.map(id=>{const t=TRACKS.find(x=>x.id===id);
+    return `<div class="territory" style="cursor:pointer" onclick="openTrack('${id}')">
+      <div class="tg">${t.icon}</div><h3 style="font-size:18px">${t.name}</h3>
+      <div class="tag" style="min-height:auto;margin-bottom:8px">${t.tag}</div>
+      <span class="chip cnt">${t.cnt} 个真实案例</span></div>`;}).join('');
+  res.innerHTML=`<div class="badge">⛏️</div>
+    <h3>你的淘金者画像</h3>
+    <div class="rdesc">照着这 ${top.length} 条路先走，比全都要更可能成。点卡片直接看赛道详情。</div>
+    <div class="rtracks">${cards}</div>
+    <button class="btn primary" onclick="goQ(0);res.classList.remove('active');document.querySelectorAll('.quiz-step').forEach(s=>s.classList.remove('active'));document.querySelector('.quiz-step').classList.add('active');qa=[];">↻ 重新测一次</button>`;
+  document.querySelectorAll('.quiz-step').forEach(s=>s.classList.remove('active'));
+  res.classList.add('active');
+  res.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ---------- CASES ---------- */
+let curFilter='all',curSearch='';
+const TRACK_NAME={};TRACKS.forEach(t=>TRACK_NAME[t.id]=t.name);
+function allCases(){
+  let arr=[];
+  TRACKS.forEach(t=>{(RAW[t.id]||[]).forEach(e=>arr.push({...e,track:t.id,tname:t.name,icon:t.icon}));});
+  return arr;
+}
+function renderFilters(){
+  const f=$('#caseFilters');f.innerHTML='';
+  const mk=(id,txt)=>{const b=document.createElement('button');b.className='fchip'+(curFilter===id?' on':'');b.textContent=txt;b.onclick=()=>{curFilter=id;renderFilters();renderCases();};f.appendChild(b);};
+  mk('all','全部');TRACKS.forEach(t=>mk(t.id,t.name));
+}
+function renderCases(){
+  let arr=allCases();
+  if(curFilter!=='all')arr=arr.filter(e=>e.track===curFilter);
+  if(curSearch){const s=curSearch.toLowerCase();arr=arr.filter(e=>(e.n+e.d+e.tname).toLowerCase().includes(s));}
+  $('#caseCount').textContent=`共 ${arr.length} 个匹配项目`;
+  $('#caseGrid').innerHTML=arr.map(e=>`<a class="case" href="${e.u}" target="_blank" rel="noopener">
+    <div class="ctop"><span class="cname">${e.icon} ${e.n}</span>${e.ov?'<span class="cov">出海</span>':''}<span class="ctrack">${e.tname}</span></div>
+    <div class="cdesc">${e.d}</div></a>`).join('')||'<p style="color:var(--ink-soft)">没有匹配，换个词试试。</p>';
+}
+$('#caseSearch').addEventListener('input',e=>{curSearch=e.target.value;renderCases();});
+
+/* ---------- ROADMAP ---------- */
+const STEPS=[
+ {t:'选一条赛道，别全都要',d:'从地图和测试结果里挑 1 条最像你的，接下来一个月只盯它。'},
+ {t:'找一个「真人真事」当样板',d:'在案例库里挑一个和你情况最像的产品，把它拆成功能清单。'},
+ {t:'想清楚谁付钱、付多少',d:'先写清楚：用户是谁、凭什么给你钱、你打算收订阅还是买断。'},
+ {t:'用 AI 做出能跑的 Demo',d:'不追求完美，先把最小可用版本做出来，发给 3 个潜在用户看。'},
+ {t:'拿到第一笔钱再谈放大',d:'有人愿意付费，说明路子对。之后才是打磨、获客、规模化。'}
+];
+function renderSteps(){
+  const s=$('#steps');s.innerHTML='';
+  STEPS.forEach((st,i)=>{
+    const done=state.steps.includes(i);
+    const el=document.createElement('div');el.className='step'+(done?' done':'');
+    el.innerHTML=`<div class="num">${done?'✓':i+1}</div><div><div class="stitle">${st.t}</div><div class="sdesc">${st.d}</div></div>`;
+    el.onclick=()=>{if(state.steps.includes(i)){state.steps=state.steps.filter(x=>x!==i);state.coins=Math.max(0,state.coins-5);}else{state.steps.push(i);state.coins+=5;toast('+5 ¥ 进度+1');}save();renderSteps();updateProg();};
+    s.appendChild(el);
+  });
+}
+
+/* ---------- INIT ---------- */
+renderMap();renderQuiz();renderFilters();renderCases();renderSteps();updateProg();
+</script>
+</body>
+</html>
