@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>独立淘金地图 · 一个人也能做的赚钱路子</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- 字体改为系统字体栈，移除 Google Fonts 外链：避免国内/微信浏览器因 fonts.googleapis.com 被墙而白屏 -->
 <style>
 :root{
   --paper:#F6F0E2; --paper2:#EFE6D0; --card:#FBF7EC;
@@ -18,13 +16,13 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  font-family:"PingFang SC","Microsoft YaHei","Source Han Sans SC","Noto Sans CJK SC",system-ui,-apple-system,sans-serif;
   color:var(--ink); background:var(--paper);
   background-image:radial-gradient(rgba(36,31,24,.07) 1px, transparent 1px);
   background-size:22px 22px;
   line-height:1.7; -webkit-font-smoothing:antialiased;
 }
-h1,h2,h3,h4{font-family:"Noto Serif SC","Songti SC",serif; font-weight:900; letter-spacing:.02em; line-height:1.25}
+h1,h2,h3,h4{font-family:"Songti SC","SimSun","Source Han Serif SC","Noto Serif CJK SC",serif; font-weight:900; letter-spacing:.02em; line-height:1.25}
 a{color:inherit}
 .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
 
@@ -32,7 +30,7 @@ a{color:inherit}
 .topbar{position:sticky;top:0;z-index:50;background:rgba(246,240,226,.92);
   backdrop-filter:blur(6px);border-bottom:1.5px solid var(--ink)}
 .topbar .wrap{display:flex;align-items:center;gap:14px;height:58px}
-.brand{font-family:"Noto Serif SC",serif;font-weight:900;font-size:18px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand{font-family:"Songti SC","SimSun","Source Han Serif SC","Noto Serif CJK SC",serif;font-weight:900;font-size:18px;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .brand .mark{width:26px;height:26px;flex:0 0 auto}
 .topnav{margin-left:auto;display:flex;gap:6px;align-items:center}
 .topnav a{font-size:13px;color:var(--ink-soft);text-decoration:none;padding:6px 10px;border-radius:8px}
@@ -56,7 +54,7 @@ a{color:inherit}
 .hero-stats{display:flex;flex-wrap:wrap;gap:14px;margin:26px 0 30px}
 .hstat{background:var(--card);border:1.5px solid var(--ink);border-radius:14px;
   padding:14px 20px;box-shadow:var(--shadow);min-width:120px}
-.hstat b{font-family:"Noto Serif SC",serif;font-size:28px;display:block;color:var(--gold-deep)}
+.hstat b{font-family:"Songti SC","SimSun","Source Han Serif SC","Noto Serif CJK SC",serif;font-size:28px;display:block;color:var(--gold-deep)}
 .hstat span{font-size:12.5px;color:var(--ink-soft)}
 .cta-row{display:flex;flex-wrap:wrap;gap:12px}
 .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;
@@ -70,7 +68,7 @@ a{color:inherit}
 /* ---------- SECTION ---------- */
 section{padding:46px 0;border-top:1.5px dashed var(--line)}
 .sec-head{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:8px}
-.sec-num{font-family:"Noto Serif SC",serif;font-weight:900;font-size:15px;color:#fff;
+.sec-num{font-family:"Songti SC","SimSun","Source Han Serif SC","Noto Serif CJK SC",serif;font-weight:900;font-size:15px;color:#fff;
   background:var(--gold);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto;border:1.5px solid var(--gold-deep)}
 .sec-head h2{font-size:clamp(24px,4vw,34px)}
 .sec-sub{color:var(--ink-soft);font-size:14.5px;max-width:680px;margin:6px 0 26px}
@@ -80,7 +78,7 @@ section{padding:46px 0;border-top:1.5px dashed var(--line)}
 .territory{position:relative;background:var(--card);border:1.5px solid var(--ink);border-radius:16px;
   padding:18px 18px 16px;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s ease, box-shadow .12s ease}
 .territory:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--ink)}
-.territory .tnum{position:absolute;top:-12px;left:16px;font-family:"Noto Serif SC",serif;font-weight:900;
+.territory .tnum{position:absolute;top:-12px;left:16px;font-family:"Songti SC","SimSun","Source Han Serif SC","Noto Serif CJK SC",serif;font-weight:900;
   font-size:13px;background:var(--ink);color:var(--paper);padding:2px 10px;border-radius:12px}
 .territory .tg{font-size:30px;margin-bottom:4px}
 .territory h3{font-size:19px;margin-bottom:2px}
@@ -135,7 +133,7 @@ section{padding:46px 0;border-top:1.5px dashed var(--line)}
 .quiz-step.active{display:block;animation:fade .25s ease}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .q-prog{font-size:13px;color:var(--ink-soft);margin-bottom:6px;font-weight:700}
-.q-title{font-family:"Noto Serif SC",serif;font-size:21px;margin-bottom:18px}
+.q-title{font-family:"Songti SC","SimSun","Source Han Serif SC","Noto Serif CJK SC",serif;font-size:21px;margin-bottom:18px}
 .q-opt{display:block;width:100%;text-align:left;background:var(--paper);border:1.5px solid var(--ink);
   border-radius:12px;padding:14px 16px;margin-bottom:11px;font-size:15px;cursor:pointer;font-family:inherit;
   transition:transform .1s, background .1s}
@@ -175,7 +173,7 @@ section{padding:46px 0;border-top:1.5px dashed var(--line)}
 .step{display:flex;gap:14px;background:var(--card);border:1.5px solid var(--ink);border-radius:13px;
   padding:15px 17px;box-shadow:3px 3px 0 var(--ink);cursor:pointer;transition:opacity .2s}
 .step .num{flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink);
-  display:flex;align-items:center;justify-content:center;font-family:"Noto Serif SC",serif;font-weight:900;background:var(--paper2)}
+  display:flex;align-items:center;justify-content:center;font-family:"Songti SC","SimSun","Source Han Serif SC","Noto Serif CJK SC",serif;font-weight:900;background:var(--paper2)}
 .step.done{opacity:.55}
 .step.done .num{background:var(--forest);color:#fff;border-color:var(--forest)}
 .step.done .stitle{text-decoration:line-through}
